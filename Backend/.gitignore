@@ -1,0 +1,53 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# dotenv
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Temp files
+tmp/
+temp/
+*.tmp
+*.temp
+
+#Command line history
+.history
+
+# MacOS files
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+.idea/
+*.code-workspace
+
+# Test Coverage and build
+coverage/
+build/
+dist/
+.out/
+
+#Other
+*.bak
+*.orig

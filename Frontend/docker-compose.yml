@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file: 
+      - .env
+    depends_on:
+      - backend_api
+
+  backend_api:
+    image: your-backend-image
+    environment:
+      - API_URL=http://localhost:3000/api
