@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
   try {
     const { fullname, username, email, password, dateOfBirth, role } = req.body
     const newUser = await registerUserService(fullname, username, email, password, dateOfBirth, role)
-    return res.status(200).send(new SuccesResponse("User registered succesfully", newUser))
+    return res.status(201).send(new SuccesResponse("User registered succesfully", newUser))
   } catch (error) {
     return res.status(500).send(new ErrorResponse(error.message))
   }
