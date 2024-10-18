@@ -12,11 +12,6 @@ const User = sequelize.define('User', {
     allowNull: true,
     unique: true
   },
-  phoneNumber: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
-  },
   password: {
     type: DataTypes.STRING,
     allowNull: false
@@ -42,12 +37,19 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  role:{
-    type:DataTypes.ENUM('user','admin'),
-    defaultValue:'user'
+  role: {
+    type: DataTypes.ENUM('user', 'admin'),
+    defaultValue: 'user'
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  hooks: {
+    beforeValidate: (user) => {
+      if (!user.role || user.role.trim() === '' || !['admin', 'user'].includes(user.role)) {
+        user.role = 'user'
+      }
+    }
+  }
 })
 
 module.exports = User

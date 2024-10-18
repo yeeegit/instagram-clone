@@ -4,7 +4,7 @@ const { ErrorResponse } = require('../../helpers/responseHandler')
 const User = require('../../models/User')
 
 
-const registerUser = async (phoneNumber, email, fullname, password, username, dateOfBirth, role) => {
+const registerUser = async ( email, fullname, password, username, dateOfBirth, role) => {
   const hashedPassword = await bcrypt.hash(password, 10)
   const isEmailExists = await getUserByEmail(email)
   const isUsernameExists = await getUserByUsername(username)
@@ -17,7 +17,6 @@ const registerUser = async (phoneNumber, email, fullname, password, username, da
   try {
     const newUser = await User.create({
       email,
-      phoneNumber,
       password: hashedPassword,
       fullname,
       username,
