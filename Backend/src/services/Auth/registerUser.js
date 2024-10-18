@@ -2,9 +2,7 @@ const bcrypt = require('bcrypt')
 const { getUserByEmail, getUserByUsername } = require('../User/user-services')
 const { ErrorResponse } = require('../../helpers/responseHandler')
 const User = require('../../models/User')
-
-
-const registerUser = async ( email, fullname, password, username, dateOfBirth, role) => {
+const registerUser = async (fullname, username, email, password, dateOfBirth, role) => {
   const hashedPassword = await bcrypt.hash(password, 10)
   const isEmailExists = await getUserByEmail(email)
   const isUsernameExists = await getUserByUsername(username)
