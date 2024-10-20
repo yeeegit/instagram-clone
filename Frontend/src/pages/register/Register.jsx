@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    fullname: "",
     username: "",
     email: "",
     password: "",
@@ -13,8 +17,24 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+        formData
+      );
+
+      if (response.data.success) {
+        toast.success("Registration successful! Please log in.");
+      } else {
+        toast.error("Registration failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response ? err.response.data.message : "Server error.");
+    }
   };
 
   return (
@@ -26,6 +46,15 @@ const Register = () => {
           className="mb-6 h-12 w-auto"
         />
         <form onSubmit={handleSubmit} className="w-full flex flex-col">
+          <input
+            type="text"
+            name="fullname"
+            value={formData.fullname}
+            onChange={handleInputChange}
+            className="mb-4 p-2 border border-gray-300 rounded"
+            placeholder="Full Name"
+            required
+          />
           <input
             type="text"
             name="username"
@@ -60,6 +89,7 @@ const Register = () => {
             Sign Up
           </button>
         </form>
+
         <p className="text-sm mt-4">
           Already have an account?{" "}
           <Link to="/login" className="text-blue-500 hover:underline">
