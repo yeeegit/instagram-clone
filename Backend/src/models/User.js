@@ -1,5 +1,5 @@
-const sequelize = require('../../config/connectionToDB')
-const { DataTypes } = require('sequelize')
+const sequelize = require('../../config/connectionToDB');
+const { DataTypes } = require('sequelize');
 
 const User = sequelize.define('User', {
   id: {
@@ -27,7 +27,7 @@ const User = sequelize.define('User', {
   },
   dateOfBirth: {
     type: DataTypes.DATEONLY,
-    allowNull: false
+    allowNull: true  // This makes field optional, change to false if it needs to be required.
   },
   userImage: {
     type: DataTypes.STRING,
@@ -46,10 +46,10 @@ const User = sequelize.define('User', {
   hooks: {
     beforeValidate: (user) => {
       if (!user.role || user.role.trim() === '' || !['admin', 'user'].includes(user.role)) {
-        user.role = 'user'
+        user.role = 'user';
       }
     }
   }
-})
+});
 
-module.exports = User
+module.exports = User;
