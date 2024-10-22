@@ -45,6 +45,7 @@ const loginUserService = async (identifier, password, res) => {
   }
 
   res.cookie("token", token, cookieOptions);
+  
   const { password: _, ...userWithoutPassword } = user.toJSON();
   return userWithoutPassword;
 };

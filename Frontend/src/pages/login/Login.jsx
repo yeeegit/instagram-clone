@@ -23,9 +23,9 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
-        formData
+        formData,
+        { withCredentials: true }
       );
-      console.log(response.data);
       //TODO: add redirect to home page after login n register, add authorized pages to prevent non logged in visitors reach unwanted pages
       if (response.data.status) {
         // TODO: return success=true from backend if login is successful, change parameter to 'response.data.data.success'

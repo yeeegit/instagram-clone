@@ -1,9 +1,10 @@
 const express = require("express");
 const syncDbConnection = require("./config/syncDbConnection");
-const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+
+const app = express();
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./src/swagger/swaggerConfig");
