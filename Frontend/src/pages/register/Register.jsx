@@ -26,7 +26,7 @@ const Register = () => {
         formData
       );
 
-      if (response.data.success) {
+      if (response.data.data.success) {
         toast.success("Registration successful! Please log in.");
       } else {
         toast.error("Registration failed.");

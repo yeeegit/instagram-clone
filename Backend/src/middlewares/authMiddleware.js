@@ -1,20 +1,29 @@
-const jwt = require('jsonwebtoken')
-const { ErrorResponse } = require('../helpers/responseHandler')
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
+const { ErrorResponse } = require("../helpers/responseHandler");
 
-const authMiddleware = (req, res, next) => {
-  const authenticationHeader = req.headers.authorization
-  const token = authenticationHeader && authenticationHeader.split(' ')[1]
-  if (!token) {
-    return res.status(401).send(new ErrorResponse('Token not provided'))
+const verify = promisify(jwt.verify); // Makes JWT.verify() async to not block asynchronous code flow  
+
+const authMiddleware = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).send(new ErrorResponse("Token not provided"));
+    }
+
+    const decodedToken = await verify(token, process.env.JWT_SECRET_KEY);
+    req.user = decodedToken;
+
+    next();
+  } catch (err) {
+    console.error("Authentication error:", err);
+
+    if (err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") {
+      return res.status(403).send(new ErrorResponse("Invalid or expired token"));
+    }
+    return res.status(500).send(new ErrorResponse("An internal error occurred"));
   }
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-    if (err) {
-      res.status(403).send(new ErrorResponse('Invalid or expired token'))
-    }
-    else {
-      req.user = user
-      next()
-    }
-  })
-}
-module.exports = authMiddleware
+};
+
+module.exports = authMiddleware;

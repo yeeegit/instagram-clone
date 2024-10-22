@@ -1,69 +1,41 @@
-const fakePosts = [
-  {
-    id: 1,
-    username: "user1",
-    userImage: "https://i.pravatar.cc/150?img=1",
-    postImage: "/fakepostimg.jpg",
-    content: "This is the first post!",
-    comments: [
-      { commenter: "commenter1", text: "Great post!" },
-      { commenter: "commenter2", text: "Really enjoyed this!" },
-    ],
-  },
-  {
-    id: 2,
-    username: "user2",
-    userImage: "https://i.pravatar.cc/150?img=2",
-    postImage: "/fakepostimg.jpg",
-    content: "Here’s another interesting post!",
-    comments: [
-      { commenter: "commenter1", text: "Awesome view!" },
-      { commenter: "commenter2", text: "Love this!" },
-    ],
-  },
-  {
-    id: 3,
-    username: "user3",
-    userImage: "https://i.pravatar.cc/150?img=3",
-    postImage: "/fakepostimg.jpg",
-    content: "Check out this amazing view!",
-    comments: [
-      { commenter: "commenter1", text: "So beautiful!" },
-      { commenter: "commenter2", text: "Incredible scenery!" },
-    ],
-  },
-  {
-    id: 4,
-    username: "user4",
-    userImage: "https://i.pravatar.cc/150?img=4",
-    postImage: "/fakepostimg.jpg",
-    content: "Enjoying the day with friends!",
-    comments: [
-      { commenter: "commenter1", text: "Looks like a fun day!" },
-      { commenter: "commenter2", text: "Wish I was there!" },
-    ],
-  },
-  {
-    id: 5,
-    username: "user5",
-    userImage: "https://i.pravatar.cc/150?img=5",
-    postImage: "/fakepostimg.jpg",
-    content: "Just chilling at home.",
-    comments: [
-      { commenter: "commenter1", text: "Sometimes you just need a day in!" },
-      { commenter: "commenter2", text: "Enjoy your relaxation!" },
-    ],
-  },
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/getMainPagePosts`,
+          { withCredentials: true }
+        );
+
+        setPosts(response.data.data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load posts.");
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <div className="bg-black min-h-screen p-2 flex flex-col items-center">
       <div className="space-y-4 w-full max-w-2xl">
-        {fakePosts.map((post) => (
+        {posts.map((post) => (
           <div
             key={post.id}
-            className="bg-black p-3 flex flex-col w-[90%] md:w-[60%] mx-auto" // Use w-90 for mobile, w-60 for PC
+            className="bg-black p-3 flex flex-col w-[90%] md:w-[60%] mx-auto"
           >
             <div className="flex items-center space-x-4 mb-2">
               <img

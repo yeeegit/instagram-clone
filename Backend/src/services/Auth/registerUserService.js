@@ -3,13 +3,7 @@ const { getUserByEmail, getUserByUsername } = require("../User/user-services");
 const { ErrorResponse } = require("../../helpers/responseHandler");
 const User = require("../../models/User");
 
-const registerUserService = async (
-  fullname,
-  username,
-  email,
-  password,
-  role = "user" // Default role
-) => {
+const registerUserService = async ( fullname,  username,email,password,role = "user"/* Default role */) => { 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const isEmailExists = await getUserByEmail(email);
@@ -39,10 +33,7 @@ const registerUserService = async (
       user: userWithoutPassword,
     };
   } catch (error) {
-    return {
-      success: false,
-      message: error.message || "User creation failed.",
-    };
+    throw new ErrorResponse(error.message);
   }
 };
 
