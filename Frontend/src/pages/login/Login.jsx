@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,14 +10,34 @@ const Login = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Handle login logic here
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+        formData
+      );
+      console.log(response.data);
+      //TODO: add redirect to home page after login n register, add authorized pages to prevent non logged in visitors reach unwanted pages
+      if (response.data.status) {
+        // TODO: return success=true from backend if login is successful, change parameter to 'response.data.data.success'
+        toast.success("Login successful!");
+        navigate("/");
+      } else {
+        toast.error("Login failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response ? err.response.data.message : "Server error.");
+    }
   };
 
   return (
