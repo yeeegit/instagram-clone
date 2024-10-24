@@ -9,7 +9,7 @@ const validationErrorHandler = (req, res, next) => {
     const formattedErrors = expressValidatorHelper(errors);
     return res
       .status(400)
-      .json(new ErrorResponse("Validation error", formattedErrors));
+      .send(new ErrorResponse(formattedErrors))
   }
   next();
 };

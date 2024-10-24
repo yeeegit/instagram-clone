@@ -26,14 +26,22 @@ const Register = () => {
         formData
       );
 
-      if (response.data.data.success) {
+      if (response.data.status) {
         toast.success("Registration successful! Please log in.");
       } else {
         toast.error("Registration failed.");
       }
     } catch (err) {
-      console.error(err);
-      toast.error(err.response ? err.response.data.message : "Server error.");
+      console.error(err.response.data.message);
+      if(err.response && !Array.isArray(err.response.data.message)){
+        toast.error(err.response.data.message)
+      }
+      else if(err.response && Array.isArray(err.response.data.message)){
+        err.response.data.message.map(err=>toast.error(err))
+      }
+      else{
+        toast.error("Server error")
+      }
     }
   };
 

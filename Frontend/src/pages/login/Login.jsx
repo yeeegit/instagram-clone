@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    identifier: "",
     password: "",
   });
 
@@ -35,8 +35,16 @@ const Login = () => {
         toast.error("Login failed.");
       }
     } catch (err) {
-      console.error(err);
-      toast.error(err.response ? err.response.data.message : "Server error.");
+      console.error(err.response.data.message);
+      if(err.response && !Array.isArray(err.response.data.message)){
+        toast.error(err.response.data.message)
+      }
+      else if(err.response && Array.isArray(err.response.data.message)){
+        err.response.data.message.map(err=>toast.error(err))
+      }
+      else{
+        toast.error("Server error")
+      }
     }
   };
 
@@ -51,11 +59,11 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="w-full flex flex-col">
           <input
             type="text"
-            name="username"
-            value={formData.username}
+            name="identifier"
+            value={formData.identifier}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Username"
+            placeholder="Username or Email"
             required
           />
           <input

@@ -6,12 +6,7 @@ const registerUserController = async (req, res) => {
   try {
     const { fullname, username, email, password, role } = req.body;
     const newUser = await registerUserService( fullname, username, email, password, role);
-
-    if (newUser.success) {
       return res.status(201).send(new SuccessResponse("User registered successfully", newUser));
-    } else {
-      return res.status(400).send(new ErrorResponse(error.message));
-    }
   } catch (error) {
     return res.status(500).send(new ErrorResponse(error.message));
   }

@@ -26,10 +26,6 @@ const userRegisterValidator = [
     .matches(/[!@#$%^&*(),.?":{}|<>]/)
     .withMessage("Password must contain at least one special character."),
 
-  body("dateOfBirth")
-    .optional()
-    .isDate({ format: "YYYY-MM-DD" })
-    .withMessage("Date of birth must be in YYYY-MM-DD format."),
 ];
 
 module.exports = userRegisterValidator;
