@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,15 +20,15 @@ const Home = () => {
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Failed to load posts.");
+        setError(t("failedToLoadPosts"));
         setLoading(false);
       }
     };
 
     fetchPosts();
-  }, []);
+  }, [t]); //translation updates on language change with dependency 't'
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>{t("loading")}</div>;
   if (error) return <div>{error}</div>;
 
   return (
@@ -53,7 +55,7 @@ const Home = () => {
             <p className="text-white mb-2">{post.content}</p>
             <div className="text-gray-400 text-sm mb-2">
               <a href="#" className="text-white font-bold hover:underline">
-                View all comments
+                {t("viewAllComments")}
               </a>
             </div>
             <div className="space-y-1 mb-4">

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useTranslation} from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
@@ -26,24 +28,20 @@ const Login = () => {
         formData,
         { withCredentials: true }
       );
-      //TODO: add redirect to home page after login n register, add authorized pages to prevent non logged in visitors reach unwanted pages
       if (response.data.status) {
-        // TODO: return success=true from backend if login is successful, change parameter to 'response.data.data.success'
-        toast.success("Login successful!");
+        toast.success(t("loginSuccess"));
         navigate("/");
       } else {
-        toast.error("Login failed.");
+        toast.error(t("loginFailed"));
       }
     } catch (err) {
       console.error(err.response.data.message);
-      if(err.response && !Array.isArray(err.response.data.message)){
-        toast.error(err.response.data.message)
-      }
-      else if(err.response && Array.isArray(err.response.data.message)){
-        err.response.data.message.map(err=>toast.error(err))
-      }
-      else{
-        toast.error("Server error")
+      if (err.response && !Array.isArray(err.response.data.message)) {
+        toast.error(t("serverError"));
+      } else if (err.response && Array.isArray(err.response.data.message)) {
+        err.response.data.message.map((err) => toast.error(err));
+      } else {
+        toast.error(t("serverError"));
       }
     }
   };
@@ -63,7 +61,7 @@ const Login = () => {
             value={formData.identifier}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Username or Email"
+            placeholder={t("usernameOrEmail")}
             required
           />
           <input
@@ -72,21 +70,21 @@ const Login = () => {
             value={formData.password}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Password"
+            placeholder={t("password")}
             required
           />
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
-            Log In
+            {t("logIn")}
           </button>
         </form>
         <p className="text-sm mt-4">
-          Don&apos;t have an account?{" "}
-          <Link to="/register" className="text-blue-500 hover:underline">
-            Sign Up
-          </Link>
+            {t("noAccount")}{" "}
+            <Link to="/register" className="text-blue-500 hover:underline">
+              {t("signUp")}
+            </Link>
         </p>
       </div>
     </div>

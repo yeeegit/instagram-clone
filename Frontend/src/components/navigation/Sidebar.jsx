@@ -10,34 +10,53 @@ import {
   FaSearch,
   FaUser,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
+  const { t } = useTranslation();
+
   const links = [
-    { to: "/", icon: <FaHome className="text-xl" />, label: "Home" },
-    { to: "/search", icon: <FaSearch className="text-xl" />, label: "Search" },
+    { to: "/", icon: <FaHome className="text-xl" />, label: t("sidebar.home") },
+    {
+      to: "/search",
+      icon: <FaSearch className="text-xl" />,
+      label: t("sidebar.search"),
+    },
     {
       to: "/messages",
       icon: <FaRegEnvelope className="text-xl" />,
-      label: "Messages",
+      label: t("sidebar.messages"),
     },
     {
       to: "/explore",
       icon: <FaCompass className="text-xl" />,
-      label: "Explore",
+      label: t("sidebar.explore"),
     },
-    { to: "/reels", icon: <FaVideo className="text-xl" />, label: "Reels" },
+    {
+      to: "/reels",
+      icon: <FaVideo className="text-xl" />,
+      label: t("sidebar.reels"),
+    },
     {
       to: "/notifications",
       icon: <FaBell className="text-xl" />,
-      label: "Notifications",
+      label: t("sidebar.notifications"),
     },
     {
       to: "/create-post",
       icon: <FaPlusCircle className="text-xl" />,
-      label: "Create Post",
+      label: t("sidebar.createPost"),
     },
-    { to: "/profile", icon: <FaUser className="text-xl" />, label: "Profile" },
-    { to: "/settings", icon: <FaCog className="text-xl" />, label: "Settings" },
+    {
+      to: "/profile",
+      icon: <FaUser className="text-xl" />,
+      label: t("sidebar.profile"),
+    },
+    {
+      to: "/settings",
+      icon: <FaCog className="text-xl" />,
+      label: t("sidebar.settings"),
+    },
   ];
 
   return (

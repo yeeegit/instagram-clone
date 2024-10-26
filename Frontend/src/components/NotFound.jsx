@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const NotFound = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-gray-900 p-4">
       <div className="mb-6">
@@ -20,17 +23,16 @@ const NotFound = () => {
         </svg>
       </div>
       <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 dark:text-white mb-4 text-center">
-        Page Not Found
+        {t("pageNotFound")}
       </h1>
       <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 mb-8 text-center max-w-md px-4">
-        Sorry, the page you&apos;re looking for isn&apos;t available. You might
-        have the wrong link, or the page may have been moved.
+        {t("sorryPageNotAvailable")}
       </p>
       <Link
         to="/"
         className="text-white bg-blue-500 hover:bg-blue-600 transition-colors px-6 py-3 rounded-lg text-sm font-medium shadow-lg dark:bg-blue-600 dark:hover:bg-blue-700"
       >
-        Go Back to Home
+        {t("goBackToHome")}
       </Link>
     </div>
   );

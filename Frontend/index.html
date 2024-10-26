@@ -1,10 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+
+    <!-- <meta http-equiv="Content-Security-Policy"content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';"/> -->
+    <!-- commented tag is for security reasons, uncomment it before production. Add urls of used apis to tag so it will not block requests -->
+
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Referrer-Policy" content="no-referrer" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="geolocation=(self), microphone=()"
+    />
+    <meta name="description" content="Instagram Clone" />
+    <meta
+      name="keywords"
+      content="Instagram, social media, photo sharing, clone, web app"
+    />
+
+    <title>Instagram Clone</title>
   </head>
   <body>
     <div id="root"></div>

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 const fakeUsers = [
   { username: "user1", image: "https://i.pravatar.cc/150?img=11" },
   { username: "user2", image: "https://i.pravatar.cc/150?img=12" },
@@ -7,9 +9,11 @@ const fakeUsers = [
 ];
 
 const Rightbar = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="w-64 h-screen p-4 bg-black text-white">
-      <h2 className="text-lg mb-4">You Might Follow</h2>
+      <h2 className="text-lg mb-4">{t("youMightFollow")}</h2>
       <div className="space-y-4">
         {fakeUsers.map((user, index) => (
           <div key={index} className="flex items-center justify-between">
@@ -21,7 +25,7 @@ const Rightbar = () => {
               />
               <p className="text-sm font-medium">{user.username}</p>
             </div>
-            <button className="text-blue-500 text-xs">Follow</button>
+            <button className="text-blue-500 text-xs">{t("follow")}</button>
           </div>
         ))}
       </div>

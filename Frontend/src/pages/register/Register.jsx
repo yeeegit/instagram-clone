@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -27,20 +29,18 @@ const Register = () => {
       );
 
       if (response.data.status) {
-        toast.success("Registration successful! Please log in.");
+        toast.success(t("registrationSuccess"));
       } else {
-        toast.error("Registration failed.");
+        toast.error(t("registrationFailed"));
       }
     } catch (err) {
-      console.error(err.response.data.message);
-      if(err.response && !Array.isArray(err.response.data.message)){
-        toast.error(err.response.data.message)
-      }
-      else if(err.response && Array.isArray(err.response.data.message)){
-        err.response.data.message.map(err=>toast.error(err))
-      }
-      else{
-        toast.error("Server error")
+      console.error(err.response?.data?.message);
+      if (err.response && !Array.isArray(err.response.data.message)) {
+        toast.error(t("serverError"));
+      } else if (err.response && Array.isArray(err.response.data.message)) {
+        err.response.data.message.map((error) => toast.error(error));
+      } else {
+        toast.error(t("serverError"));
       }
     }
   };
@@ -60,7 +60,7 @@ const Register = () => {
             value={formData.fullname}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Full Name"
+            placeholder={t("fullnamePlaceholder")}
             required
           />
           <input
@@ -69,7 +69,7 @@ const Register = () => {
             value={formData.username}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Username"
+            placeholder={t("usernamePlaceholder")}
             required
           />
           <input
@@ -78,7 +78,7 @@ const Register = () => {
             value={formData.email}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Email"
+            placeholder={t("emailPlaceholder")}
             required
           />
           <input
@@ -87,21 +87,21 @@ const Register = () => {
             value={formData.password}
             onChange={handleInputChange}
             className="mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Password"
+            placeholder={t("passwordPlaceholder")}
             required
           />
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
-            Sign Up
+            {t("signUp")}
           </button>
         </form>
 
         <p className="text-sm mt-4">
-          Already have an account?{" "}
+          {t("alreadyHaveAccount")}{" "}
           <Link to="/login" className="text-blue-500 hover:underline">
-            Log In
+            {t("logIn")}
           </Link>
         </p>
       </div>
