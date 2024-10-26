@@ -1,4 +1,3 @@
-// testModels.js
 const sequelize = require('../../config/connectionToDB');
 const User = require('./User');
 const Post = require('./Post');
