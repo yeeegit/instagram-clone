@@ -3,6 +3,7 @@ const User = require("../../models/User");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const { ErrorResponse, SuccessResponse } = require("../../helpers/responseHandler");
+const responseMessages = require('../../helpers/responseMessages')
 
 const getUserByEmailOrUsername = async (identifier) => {
   return User.findOne({
@@ -17,12 +18,12 @@ const loginUserService = async (identifier, password) => {
     const user = await getUserByEmailOrUsername(identifier);
 
     if (!user) {
-      throw new ErrorResponse("Invalid credentials");
+      throw new ErrorResponse(responseMessages.INVALID_CREDENTIALS, 401);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new ErrorResponse("Invalid credentials");
+      throw new ErrorResponse(responseMessages.INVALID_CREDENTIALS, 401);
     }
 
     const token = jwt.sign(
@@ -46,10 +47,10 @@ const loginUserService = async (identifier, password) => {
     if (process.env.NODE_ENV === "production") {
       cookieOptions.secure = true;
     }
-
-    return { user, token, cookieOptions };
+    const { password: _, ...userWithoutPassword } = user.toJSON();
+    return { userWithoutPassword, token, cookieOptions };
   } catch (error) {
-    throw new ErrorResponse(error.message)
+    throw new ErrorResponse(error.message, error.statusCode || 500)
   }
 
 };

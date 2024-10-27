@@ -11,14 +11,6 @@ const Post = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    mediaUrl: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    mediaType: {
-      type: DataTypes.ENUM("image", "video"),
-      allowNull: false,
-    },
     caption: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -32,9 +24,9 @@ const Post = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    hideLikeCount: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    likeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     userId: {
       type: DataTypes.INTEGER,

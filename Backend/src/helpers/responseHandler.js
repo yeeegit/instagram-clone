@@ -1,16 +1,20 @@
 class BaseResponse {
-  constructor(status, message, data) {
-    (this.status = status), (this.message = message), (this.data = data);
+  constructor(status, message, data, statusCode = null) {
+    this.status = status,
+      this.message = message,
+      this.data = data;
+    if (statusCode !== null)
+      this.statusCode = statusCode
   }
 }
 class SuccessResponse extends BaseResponse {
-  constructor(message, data) {
-    super(true, message, data);
+  constructor(message, data, statusCode) {
+    super(true, message, data, statusCode);
   }
 }
 class ErrorResponse extends BaseResponse {
-  constructor(message) {
-    super(false, message, null);
+  constructor(message, statusCode=null) {
+    super(false, message, null, statusCode);
   }
 }
 

@@ -9,7 +9,7 @@ const app = express();
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./src/swagger/swaggerConfig");
 
-const authRoues = require("./src/routes/Auth/index");
+const allRoutes = require("./src/routes/index");
 
 //Synchronizing Sequelize Postgresql database models
 syncDbConnection();
@@ -22,12 +22,15 @@ app.use(cors({
 //App port, default port 5723
 const PORT = process.env.PORT || 5723;
 
-//Body and From parsers
+//Body,Form and Cookie parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/api", authRoues);
+//All App Routes
+app.use("/api", allRoutes);
+
+//Swagger URL
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, () => {
