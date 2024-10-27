@@ -27,6 +27,15 @@ const Post = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    isCommentsAllowed: {
+      // disables commenting if its false.
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    hideLikeCount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
