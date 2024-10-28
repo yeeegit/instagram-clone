@@ -1,9 +1,12 @@
-const express= require('express')
-const routes= express.Router()
-const authRoutes=require('./Auth/authRoutes')
-const userRoutes=require('./User/userRoutes')
+const express = require('express')
+const routes = express.Router()
 
-routes.use('/auth',authRoutes)
-routes.use('/user',userRoutes)
+const authRoutes = require('./Auth/authRoutes')
+const userRoutes = require('./User/userRoutes')
+const postRoutes = require('./Post/postRoutes')
 
-module.exports=routes
+routes.use('/auth', authRoutes)
+routes.use('/user', userRoutes)
+routes.use('/post', postRoutes)
+
+module.exports = routes
