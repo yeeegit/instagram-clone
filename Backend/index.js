@@ -31,7 +31,9 @@ app.use(cookieParser());
 app.use("/api", allRoutes);
 
 //Swagger URL
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs",cors({
+  origin:process.env.SWAGGER_URL
+}), swaggerUi.serve, swaggerUi.setup(swaggerDocument,{swaggerOptions:{displayRequestDuration:true}}));
 
 app.listen(PORT, () => {
   console.log(`App listening on port : ${PORT}`);

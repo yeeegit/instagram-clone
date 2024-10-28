@@ -3,11 +3,10 @@ module.exports = {
   info: {
     title: "User Management API",
     version: "1.0.0",
-    description: "API for user registration and management"
   },
   servers: [
     {
-      url: "http://localhost:1234/api/auth",
+      url: "http://localhost:3000/api/auth",
       description: "Local server"
     }
   ],
@@ -15,7 +14,7 @@ module.exports = {
     schemas: {
       RegisterUser: {
         type: "object",
-        required: ["email", "fullname", "username", "password", "dateOfBirth"],
+        required: ["email", "fullname", "username", "password"],
         properties: {
           email: {
             type: "string",
@@ -32,19 +31,31 @@ module.exports = {
           password: {
             type: "string",
             description: "Password for the user account"
-          },
-          dateOfBirth: {
-            type: "string",
-            format: "date",
-            description: "User's date of birth (YYYY-MM-DD format)"
           }
         },
         example: {
           email: "user@example.com",
           fullname: "John Doe",
           username: "johndoe",
-          password: "SecureP@ssw0rd",
-          dateOfBirth: "1990-01-01"
+          password: "SecureP@ssw0rd"
+        }
+      },
+      LoginUser: {
+        type: "object",
+        required: ["identifier", "password"],
+        properties: {
+          identifier: {
+            type: "string",
+            description: "The user's username or email address"
+          },
+          password: {
+            type: "string",
+            description: "Password for the user account"
+          }
+        },
+        example: {
+          identifier: "johndoe@example.com",
+          password: "SecureP@ssw0rd"
         }
       },
       User: {
@@ -104,6 +115,14 @@ module.exports = {
         responses: {
           201: {
             description: "User registered successfully",
+            headers: {
+              "X-Response-Time": {
+                description: "The time taken to process the request",
+                schema: {
+                  type: "string",
+                }
+              }
+            },
             content: {
               "application/json": {
                 schema: {
@@ -113,11 +132,54 @@ module.exports = {
             }
           },
           400: {
-            description: "Bad request, validation error"
+            description: "Bad request, validation error",
+          }
+        }
+      }
+    },
+    "/login": {
+      post: {
+        summary: "Log in an existing user",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/LoginUser"
+              }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: "User logged in successfully",
+            headers: {
+              "X-Response-Time": {
+                description: "The time taken to process the request",
+                schema: {
+                  type: "string",
+                }
+              }
+            },
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    token: {
+                      type: "string",
+                      description: "JWT token for the logged-in user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          401: {
+            description: "Unauthorized, invalid credentials",
           }
         }
       }
     }
-    
   }
 };

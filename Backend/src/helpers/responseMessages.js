@@ -11,12 +11,15 @@ const INVALID_CREDENTIALS = 'Invalid credentials';
 //Success messages
 const USER_REGISTERED = 'User registered successfully';
 const LOGIN_SUCCESFUL = 'Login successful'
-const USER_UPDATED = 'User updated succesfully'
+const USER_UPDATED = 'User updated successfully'
 
 //Not found messages
 const USER_NOT_FOUND = 'User not found'
 
+//Founded messages
+const USER_SUCCESSFULLY_FOUNDED='User successfully found'
+
 module.exports = {
   EMAIL_ALREADY_EXISTS, USERNAME_ALREADY_EXISTS, INVALID_CREDENTIALS, USER_REGISTERED, LOGIN_SUCCESFUL,
-  USER_NOT_FOUND, USER_DATA_UNCHANGED, USER_UPDATED
+  USER_NOT_FOUND, USER_DATA_UNCHANGED, USER_UPDATED,USER_SUCCESSFULLY_FOUNDED
 };

@@ -3,16 +3,16 @@ const responseMessages = require('../../helpers/responseMessages')
 const User = require("../../models/User")
 const bcrypt = require('bcrypt')
 
-const findUser = async (field) => {
+const findUserByField = async (field) => {
   try {
     const user = await User.findOne({ where: field, attributes: { exclude: 'password' } })
-    return user || null
+    return user;
   } catch (error) {
     throw new ErrorResponse(error.message, error.statusCode || 500)
   }
 }
-const getUserByEmail = (email) => findUser({ email })
-const getUserByUsername = (username) => findUser({ username })
+const getUserByEmail = (email) => findUserByField({ email })
+const getUserByUsername = (username) => findUserByField({ username })
 
 const updateUser = async (id, newEmail, newPassword, newFullname, newUsername, newDateOfBirth, newUserImage, newBio) => {
   try {
@@ -22,7 +22,7 @@ const updateUser = async (id, newEmail, newPassword, newFullname, newUsername, n
     }
     let isPasswordSame = true
     const { email, password, fullname, username, dateOfBirth, userImage, bio } = updateableUser;// The "role" field should be managed within Admin Services, as users are not permitted to modify their own roles.
-    const hashedPassword = (newPassword) ? (await bcrypt.hash(newPassword,10)) : password
+    const hashedPassword = (newPassword) ? (await bcrypt.hash(newPassword, 10)) : password
     isPasswordSame = await bcrypt.compare(newPassword, password)
 
     if (email === newEmail &&
@@ -44,8 +44,6 @@ const updateUser = async (id, newEmail, newPassword, newFullname, newUsername, n
       userImage: newUserImage,
       bio: newBio,
     }
-
-
     const updatedUser = await User.update(updatedData, {
       where: { id },
       returning: true
@@ -60,4 +58,4 @@ const updateUser = async (id, newEmail, newPassword, newFullname, newUsername, n
 
 
 
-module.exports = { getUserByEmail, getUserByUsername, updateUser }
+module.exports = { getUserByEmail, getUserByUsername, updateUser, findUserByField }

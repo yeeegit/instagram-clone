@@ -47,15 +47,3 @@ module.exports = sequelize;
 */
 
 
-
-// const sequelize = new Sequelize("databasename", "databaseusername:exp-postgres", "databasepassword", {//config function without .env for testModel.js model table testing.Only works without .env
-//   host: "localhost",
-//   port: 5432,//postgres port 
-//   dialect: 'postgres',
-//   logging: false
-// });
-// sequelize.authenticate()
-//   .then(() => { console.log('Database successfully connected'); })
-//   .catch((error) => { console.log('Database connection error:', error); });
-// module.exports = sequelize;
-
