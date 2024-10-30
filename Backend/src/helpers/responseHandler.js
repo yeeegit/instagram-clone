@@ -8,12 +8,12 @@ class BaseResponse {
   }
 }
 class SuccessResponse extends BaseResponse {
-  constructor(message, data, statusCode) {
+  constructor(message, data, statusCode = null) {
     super(true, message, data, statusCode);
   }
 }
 class ErrorResponse extends BaseResponse {
-  constructor(message, statusCode=null) {
+  constructor(message, statusCode = null) {
     super(false, message, null, statusCode);
   }
 }

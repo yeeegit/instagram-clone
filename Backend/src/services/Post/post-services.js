@@ -3,7 +3,7 @@ const User = require("../../models/User")
 const responseMessages = require('../../helpers/responseMessages')
 const Post = require("../../models/Post")
 
-const createPost = async (caption, isSaved, isCommentsAllowed, likeCount, userId) => {
+const createPost = async (caption, isCommentsAllowed, likeCount, userId) => {
   try {
     const isUserExists = await User.findByPk(userId)
     if (!isUserExists) {
@@ -11,7 +11,6 @@ const createPost = async (caption, isSaved, isCommentsAllowed, likeCount, userId
     }
     const newPost = Post.create({
       caption,
-      isSaved,
       isCommentsAllowed,
       likeCount,
       userId
@@ -21,7 +20,7 @@ const createPost = async (caption, isSaved, isCommentsAllowed, likeCount, userId
     throw new ErrorResponse(error.message, error.statusCode || 500)
   }
 }
-const updatePost = async (id, newCaption, newIsSaved, newIsCommentsAllowed, newLikeCount, userId) => {
+const updatePost = async (id, newCaption, newIsCommentsAllowed, newLikeCount, userId) => {
   try {
     const isUserExists = await User.findByPk(userId)
     if (!isUserExists) {
@@ -33,7 +32,6 @@ const updatePost = async (id, newCaption, newIsSaved, newIsCommentsAllowed, newL
     }
     const updatedData = {
       caption: newCaption,
-      isSaved: newIsSaved,
       isCommentsAllowed: newIsCommentsAllowed,
       likeCount: newLikeCount,
       userId

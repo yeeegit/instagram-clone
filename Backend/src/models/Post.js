@@ -15,10 +15,6 @@ const Post = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    isSaved: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
     isCommentsAllowed: {
       // disables commenting if its false.
       type: DataTypes.BOOLEAN,

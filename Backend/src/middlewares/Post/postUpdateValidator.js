@@ -11,17 +11,10 @@ const postUpdateValidator = [
   .withMessage("The caption must be text.")
   .isLength({ max: 1000 })
   .withMessage("The caption can be a maximum of 1000 characters."),
-
-body("isSaved")
-  .optional()
-  .isBoolean()
-  .withMessage("The 'Saved' status must be true or false."),
-
 body("isCommentsAllowed")
   .optional()
   .isBoolean()
   .withMessage("The 'Comments Allowed' status must be true or false."),
-
 body("likeCount")
   .optional()
   .isInt({ min: 0 })
