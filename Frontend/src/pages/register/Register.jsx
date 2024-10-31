@@ -36,7 +36,8 @@ const Register = () => {
     } catch (err) {
       console.error(err.response?.data?.message);
       if (err.response && !Array.isArray(err.response.data.message)) {
-        toast.error(t("serverError"));
+        // toast.error(t("serverError")); //TODO: Add different server error translation based on error messages.
+        toast.error(err.response.data.message)
       } else if (err.response && Array.isArray(err.response.data.message)) {
         err.response.data.message.map((error) => toast.error(error));
       } else {

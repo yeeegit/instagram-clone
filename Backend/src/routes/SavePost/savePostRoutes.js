@@ -1,11 +1,9 @@
-const express = require('express')
-const router = express.Router()
-const savedPostController = require('../../controllers/SavedPost/savedPost-controllers')
+const express = require("express");
+const router = express.Router();
+const savedPostController = require("../../controllers/SavedPost/savedPost-controllers");
+const authMiddleware = require("../../middlewares/authMiddleware");
 
+router.post("/savepost", authMiddleware, savedPostController.savePost);
+router.delete("/unsavepost", authMiddleware, savedPostController.unsavePost);
 
-router.post('/savepost', savedPostController.savePost)
-router.delete('/unsavepost', savedPostController.unsavePost)
-
-module.exports = router
-
-
+module.exports = router;

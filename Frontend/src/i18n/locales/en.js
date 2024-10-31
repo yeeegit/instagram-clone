@@ -23,6 +23,16 @@ const en = {
   sorryPageNotAvailable:
     "Sorry, the page you're looking for isn't available. You might have the wrong link, or the page may have been moved.",
   goBackToHome: "Go Back to Home",
+
+  createPost: "Create Post",
+  uploadImage: "Upload Image",
+  caption: "Caption",
+  writeCaption: "Write a caption...",
+  allowComments: "Allow comments",
+  savePost: "Save post",
+  post: "Post",
+  hideComments: "Hide Comments",
+  hideCommentsDescription: "Hides others’ comments on this post",
   sidebar: {
     home: "Home",
     search: "Search",

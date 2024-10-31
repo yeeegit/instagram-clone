@@ -14,6 +14,7 @@ const authMiddleware = async (req, res, next) => {
 
     const decodedToken = await verify(token, process.env.JWT_SECRET_KEY);
     req.user = decodedToken;
+    req.userId = decodedToken.id;
 
     next();
   } catch (err) {

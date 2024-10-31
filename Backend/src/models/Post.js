@@ -11,6 +11,10 @@ const Post = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    mediaUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     caption: {
       type: DataTypes.TEXT,
       allowNull: true,
