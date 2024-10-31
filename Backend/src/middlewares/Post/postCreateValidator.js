@@ -17,10 +17,6 @@ body("likeCount")
   .optional()
   .isInt({ min: 0 })
   .withMessage("The like count must be a positive integer."),
-
-body("userId")
-  .isInt({ min: 1 })
-  .withMessage("A valid user ID is required to create a post."),
 ]
 
 
