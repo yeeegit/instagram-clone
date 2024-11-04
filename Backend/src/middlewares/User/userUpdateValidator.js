@@ -2,9 +2,6 @@ const { body, param } = require('express-validator')
 
 //TODO:Add here "userImage" field and exist validation 
 const userUpdateValidator = [
-  param('id')
-    .isInt({ min: 1 }).withMessage('Id must be a positive number'),
-
   body("email")
     .isEmail()
     .withMessage("Please enter a valid email address.")

@@ -18,7 +18,7 @@ const findUserByField = async (req, res) => {
 
 
 const updateUser = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.user.id
   const { email, password, fullname, username, dateOfBirth, userImage, bio, role } = req.body
   try {
     const updatedUser = await userServices.updateUser(id, email, password, fullname, username, dateOfBirth, userImage, bio, role)

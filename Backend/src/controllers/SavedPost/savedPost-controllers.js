@@ -4,10 +4,6 @@ const savedPostService = require('../../services/SavedPost/savedPost-services');
 const savePost = async (req, res) => {
   const { postId } = req.body;
   const userId = req.user.id
-  console.log(userId)
-  console.log(req)
-  console.log(req.user)
-
   try {
     const savePostServiceResponse = await savedPostService.savePost(userId, postId);
     if (savePostServiceResponse.status === true) {

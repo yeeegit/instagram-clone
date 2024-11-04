@@ -2,16 +2,13 @@ const { ErrorResponse } = require("../../helpers/responseHandler");
 const User = require("../../models/User");
 const responseMessages = require("../../helpers/responseMessages");
 const Post = require("../../models/Post");
-const { bucket } = require("../../../firebase");
-const { v4: uuidv4 } = require("uuid");
+const mediaServices = require('../Media/media-services')
 
-const createPost = async (
-  caption,
-  isCommentsAllowed,
-  likeCount,
-  userId,
-  mediaUrl
-) => {
+
+const createPost = async (caption, isCommentsAllowed, likeCount, userId, file) => {
+  if (!file) {
+    throw new ErrorResponse(responseMessages.MEDIA_FILE_NOT_FOUND, 404)
+  }
   try {
     const isUserExists = await User.findByPk(userId);
     if (!isUserExists) {
@@ -22,9 +19,9 @@ const createPost = async (
       isCommentsAllowed,
       likeCount,
       userId,
-      mediaUrl,
     });
-    return newPost;
+    const uploadedMedia = await mediaServices.uploadMedia( file, newPost.id)
+    return { newPost, uploadedMedia }
   } catch (error) {
     throw new ErrorResponse(error.message, error.statusCode || 500);
   }
@@ -77,24 +74,6 @@ const deletePost = async (id) => {
   }
 };
 
-const uploadMedia = async (file) => {
-  const fileName = `media/${uuidv4()}_${file.originalname}`;
-  const fileUpload = bucket.file(fileName);
-  const stream = fileUpload.createWriteStream({
-    metadata: {
-      contentType: file.mimetype,
-    },
-  });
 
-  return new Promise((resolve, reject) => {
-    stream.on("error", (error) => reject(error));
-    stream.on("finish", async () => {
-      await fileUpload.makePublic();
-      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-      resolve(publicUrl);
-    });
-    stream.end(file.buffer);
-  });
-};
 
-module.exports = { createPost, updatePost, deletePost, uploadMedia };
+module.exports = { createPost, updatePost, deletePost, };

@@ -28,7 +28,16 @@ const Media = sequelize.define("Media", {
     onDelete: "CASCADE"
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  hooks: {
+    beforeValidate: (media) => {
+      if (media.mediaType && media.mediaType.startsWith("image/")) {
+        media.mediaType = "image";
+      } else if (post.mediaType && media.mediaType.startsWith("video/")) {
+        media.mediaType = "video";
+      }
+    }
+  }
 })
 
 Post.hasMany(Media, { foreignKey: 'postId' })

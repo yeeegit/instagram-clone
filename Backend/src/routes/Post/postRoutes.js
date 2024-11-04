@@ -7,12 +7,10 @@ const postDeleteValidator = require("../../middlewares/Post/postDeleteValidator"
 const postUpdateValidator = require("../../middlewares/Post/postUpdateValidator");
 
 const multer = require("multer");
-const authMiddleware = require("../../middlewares/authMiddleware");
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post(
   "/create",
-  authMiddleware,
   upload.single("media"),
   postCreateValidator,
   validationErrorHandler,

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const savedPostController = require("../../controllers/SavedPost/savedPost-controllers");
-const authMiddleware = require("../../middlewares/authMiddleware");
+const savePostValidator = require("../../middlewares/SavePost/SavePostValidator");
+const validationErrorHandler = require("../../helpers/validationErrorHandler");
 
-router.post("/savepost", authMiddleware, savedPostController.savePost);
-router.delete("/unsavepost", authMiddleware, savedPostController.unsavePost);
+router.post("/savepost", savePostValidator, validationErrorHandler, savedPostController.savePost);
+router.delete("/unsavepost", savePostValidator, validationErrorHandler, savedPostController.unsavePost);
 
 module.exports = router;

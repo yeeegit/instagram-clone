@@ -73,7 +73,7 @@ const NewPost = () => {
           <span className="text-gray-500">{t("uploadImage")}</span>
           <input
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             onChange={handleImageUpload}
             className="hidden"
             id="fileInput"
