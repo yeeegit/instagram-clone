@@ -9,14 +9,17 @@ import "react-toastify/dist/ReactToastify.css";
 const NewPost = () => {
   const { t } = useTranslation();
   const [caption, setCaption] = useState("");
-  const [image, setImage] = useState(null);
+  const [mediaFile, setMediaFile] = useState(null);
+  const [mediaType, setMediaType] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isCommentsAllowed, setIsCommentsAllowed] = useState(true);
 
-  const handleImageUpload = (event) => {
+  const handleMediaUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file);
+      const fileType = file.type.split("/")[0];
+      setMediaFile(file);
+      setMediaType(fileType);
     }
   };
 
@@ -29,8 +32,9 @@ const NewPost = () => {
     const formData = new FormData();
     formData.append("caption", caption);
     formData.append("isCommentsAllowed", isCommentsAllowed);
-    if (image) {
-      formData.append("media", image);
+    if (mediaFile) {
+      formData.append("media", mediaFile);
+      formData.append("mediaType", mediaType);
     }
 
     try {
@@ -39,11 +43,12 @@ const NewPost = () => {
         formData,
         { withCredentials: true }
       );
-      console.log(response)
+      console.log(response);
       if (response.data) {
         toast.success(t("postCreatedSuccessfully"));
         setCaption("");
-        setImage(null);
+        setMediaFile(null);
+        setMediaType("");
       } else {
         toast.error(t("postCreationFailed"));
       }
@@ -74,16 +79,24 @@ const NewPost = () => {
           <input
             type="file"
             accept="image/*,video/*"
-            onChange={handleImageUpload}
+            onChange={handleMediaUpload}
             className="hidden"
             id="fileInput"
           />
         </label>
 
-        {image && (
+        {mediaFile && mediaType === "image" && (
           <img
-            src={URL.createObjectURL(image)}
+            src={URL.createObjectURL(mediaFile)}
             alt="Preview"
+            className="w-full h-auto rounded-lg mb-4"
+          />
+        )}
+
+        {mediaFile && mediaType === "video" && (
+          <video
+            src={URL.createObjectURL(mediaFile)}
+            controls
             className="w-full h-auto rounded-lg mb-4"
           />
         )}

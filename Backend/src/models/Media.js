@@ -33,7 +33,7 @@ const Media = sequelize.define("Media", {
     beforeValidate: (media) => {
       if (media.mediaType && media.mediaType.startsWith("image/")) {
         media.mediaType = "image";
-      } else if (post.mediaType && media.mediaType.startsWith("video/")) {
+      } else if (media.mediaType && media.mediaType.startsWith("video/")) {
         media.mediaType = "video";
       }
     }

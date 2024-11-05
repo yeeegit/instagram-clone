@@ -15,7 +15,7 @@ syncDbConnection(); //Synchronizing Sequelize Postgresql database models
 //Body,Form, Cookie parsers and security middlewares
 app.use([
   express.json(),
-  express.urlencoded({ extended: true }),
+  express.urlencoded({ limit: "10mb", extended: true }),
   cors({ origin: process.env.FRONTEND_URL, credentials: true }),
   cookieParser(),
   helmet(),
