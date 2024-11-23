@@ -2,9 +2,8 @@ const sequelize = require('../../config/connectionToDB')
 const { DataTypes } = require('sequelize')
 const Post = require('./Post')
 const User = require('./User')
-const Comment = require('./Comment')
 
-const Like = sequelize.define('Like', {
+const PostLike = sequelize.define('PostLike', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -28,14 +27,6 @@ const Like = sequelize.define('Like', {
     },
     onDelete: "CASCADE"
   },
-  commentId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Comment,
-      key: 'id'
-    },
-    onDelete: 'CASCADE'
-  }
 }, {
   timestamps: true,
   indexes: [
@@ -46,13 +37,11 @@ const Like = sequelize.define('Like', {
   ]
 })
 
-Post.hasMany(Like, { foreignKey: 'postId' })
-Like.belongsTo(Post, { foreignKey: 'postId' })
+Post.hasMany(PostLike, { foreignKey: 'postId' })
+PostLike.belongsTo(Post, { foreignKey: 'postId' })
 
-User.hasMany(Like, { foreignKey: "userId" })
-Like.belongsTo(User, { foreignKey: "userId" })
+User.hasMany(PostLike, { foreignKey: "userId" })
+PostLike.belongsTo(User, { foreignKey: "userId" })
 
-Comment.hasMany(Like, { foreignKey: 'commentId' })
-Like.belongsTo(Comment, { foreignKey: 'commentId' })
 
-module.exports = Like
+module.exports = PostLike

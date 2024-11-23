@@ -1,11 +1,13 @@
 # Instagram Clone
 
 ## Features
+
 - ...
 
 ## Technologies Used
 
 ### Backend
+
 - Node.js
 - Express
 - Sequelize (PostgreSQL ORM)
@@ -13,8 +15,11 @@
 - Jsonwebtoken
 - CORS
 - Swagger for API documentation
+- Firebase for Cloud operations
+- Redis for Caching
 
 ### Frontend
+
 - React
 - Vite
 - Tailwind CSS

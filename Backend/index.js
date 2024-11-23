@@ -6,9 +6,11 @@ const setupSwagger = require("./src/swagger/swagger");
 require("dotenv").config();
 const helmet = require("helmet");
 const allRoutes = require("./src/routes/index");
-
 const app = express();
 const PORT = process.env.PORT || 5723;
+
+// A function is required here to sync the data in Redis cache with the database for Node-Cron to execute it.
+require('./src/helpers/syncTimer')
 
 syncDbConnection(); //Synchronizing Sequelize Postgresql database models
 

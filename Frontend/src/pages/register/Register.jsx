@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,8 @@ const Register = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +32,7 @@ const Register = () => {
 
       if (response.data.status) {
         toast.success(t("registrationSuccess"));
+        navigate("/login");
       } else {
         toast.error(t("registrationFailed"));
       }
@@ -37,7 +40,7 @@ const Register = () => {
       console.error(err.response?.data?.message);
       if (err.response && !Array.isArray(err.response.data.message)) {
         // toast.error(t("serverError")); //TODO: Add different server error translation based on error messages.
-        toast.error(err.response.data.message)
+        toast.error(err.response.data.message);
       } else if (err.response && Array.isArray(err.response.data.message)) {
         err.response.data.message.map((error) => toast.error(error));
       } else {

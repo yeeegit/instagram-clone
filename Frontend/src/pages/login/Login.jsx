@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
@@ -35,9 +35,9 @@ const Login = () => {
         toast.error(t("loginFailed"));
       }
     } catch (err) {
-      console.error(err.response.data.message);
       if (err.response && !Array.isArray(err.response.data.message)) {
-        toast.error(t("serverError"));
+        // toast.error(t("serverError")); //TODO: Add different server error translation based on error messages.
+        toast.error(err.response.data.message)
       } else if (err.response && Array.isArray(err.response.data.message)) {
         err.response.data.message.map((err) => toast.error(err));
       } else {
@@ -81,10 +81,10 @@ const Login = () => {
           </button>
         </form>
         <p className="text-sm mt-4">
-            {t("noAccount")}{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
-              {t("signUp")}
-            </Link>
+          {t("noAccount")}{" "}
+          <Link to="/register" className="text-blue-500 hover:underline">
+            {t("signUp")}
+          </Link>
         </p>
       </div>
     </div>

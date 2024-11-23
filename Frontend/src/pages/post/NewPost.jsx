@@ -55,7 +55,8 @@ const NewPost = () => {
     } catch (error) {
       console.error(error.response.data.message);
       if (error.response && !Array.isArray(error.response.data.message)) {
-        toast.error(t("serverError"));
+        // toast.error(t("serverError"));//TODO: Add different server error translation based on error messages.
+        toast.error(error.response.data.message);
       } else if (error.response && Array.isArray(error.response.data.message)) {
         error.response.data.message.forEach((err) => toast.error(err));
       } else {

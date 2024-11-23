@@ -8,7 +8,7 @@ import Messages from "@/pages/message/Messages";
 import NewPost from "@/pages/post/NewPost";
 
 const router = createBrowserRouter([
-  {path: "/",element: <Layout />, children: [{ path: "/", element: <Home /> }]},
+  { path: "/",element: <Layout />, children: [{ path: "/", element: <Home /> }]},
   { path: "messages", element: <Messages /> },
   { path: "explore", element: <div /> },
   { path: "reels", element: <div /> },
